@@ -1,0 +1,596 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>trenches analytics
+
+    </title>
+    <link rel="icon" href="images/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="css/all.min.css" rel="stylesheet">
+    <script src="js/chart.js"></script>
+    <script src="js/require.min.js"></script>
+    <script src="js/loader.min.js"></script>
+    <style>
+        :root {
+            --primary: #0f0f0f;
+            --secondary: #1a1a1a;
+            --accent: #6366f1;
+            --text: #f3f4f6;
+            --hover: #818cf8;
+            --border: rgba(99, 102, 241, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--primary);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgb(15 15 15 / 0%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 1.25rem 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: -1px;
+            text-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            color: var(--hover);
+            transform: scale(1.05);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .social-links a {
+            color: var(--text);
+            font-size: 1.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .social-links a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--hover);
+            transform: translateY(-3px);
+        }
+
+        .social-links a:hover::after {
+            transform: scaleX(1);
+        }
+
+        header {
+    padding-top: 100px;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url('ds.gif') center/cover no-repeat;
+    position: relative;
+    overflow: hidden;
+}
+
+        .header-content {
+            text-align: center;
+            z-index: 10;
+            animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: perspective(1000px);
+        }
+
+        .header-content h1 {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            letter-spacing: -2px;
+            font-weight: 800;
+            text-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+            transition: transform 0.3s ease;
+        }
+
+        .header-content h1:hover {
+            transform: scale(1.05) translateZ(20px);
+        }
+
+        .header-content p {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+            font-weight: 400;
+            text-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+        }
+
+        .header-content .slogan {
+            color: var(--accent);
+            font-style: italic;
+            font-size: 1.4rem;
+            opacity: 0.8;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        section {
+            padding: 6rem 0;
+            background-image: url('u.png');
+    background-size: cover; /* Ensures the image covers the entire section */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+            position: relative;
+            transition: background-color 0.3s ease;
+        }
+
+        section:nth-child(odd) {
+    background-image: url('u.png');
+    background-size: cover; /* Ensures the image covers the entire section */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+}
+
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--accent);
+            font-weight: 700;
+            letter-spacing: -1px;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 3px;
+            bottom: -10px;
+            left: 20%;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+        }
+
+        .chart-container {
+            height: 400px;
+            background: rgba(26, 26, 26, 0.7);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .chart-container:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            border-color: var(--accent);
+        }
+
+        .chart-container canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        .code-editor {
+            height: 500px;
+            background: var(--primary);
+            border-radius: 1rem;
+            overflow: hidden;
+            margin: 1.5rem 0;
+            border: 1px solid var(--border);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .code-editor:hover {
+            border-color: var(--accent);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .code-actions {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        select, button, input {
+            background-color: rgba(99, 102, 241, 0.1);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.5rem;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        select:hover, button:hover {
+            background-color: rgba(99, 102, 241, 0.2);
+            transform: translateY(-2px);
+        }
+
+        select:focus, input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            outline: none;
+        }
+
+        button.primary {
+            background-color: var(--accent);
+            color: var(--primary);
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        button.primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--hover);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+            z-index: -1;
+        }
+
+        button.primary:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .notification {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            padding: 1rem 2rem;
+            background: var(--accent);
+            color: var(--primary);
+            border-radius: 0.5rem;
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.3);
+            transform: translateX(0);
+            animation: slideIn 0.3s ease;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0.08;
+            pointer-events: none;
+            animation: float 20s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            filter: blur(2px);
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(100px, 100px) rotate(180deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px) perspective(1000px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) perspective(1000px);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content h1 {
+                font-size: 3.2rem;
+            }
+            
+            .header-content p {
+                font-size: 1.4rem;
+            }
+            
+            .container {
+                padding: 0 1.25rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container nav-content">
+            <div class="logo">Degens Analytics</div>
+            <div class="social-links">
+                <a href="https://x.com/deanal_ai" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://github.com/genwhyx/ihub" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <header>
+        <div class="header-content">
+            <h1>DEANAL</h1>
+            <p>Visionary 69th-Generation AI</p>
+            <p class="slogan">From Vision to Code</p>
+        </div>
+    </header>
+
+    <section id="analytics">
+        <div class="container">
+            <h2 class="section-title">Analytics</h2>
+            <select>
+                <option>Linear Regression</option>
+                <option>Neural Networks</option>
+                <option>K-Means</option>
+            </select>
+            <div class="chart-container">
+                <canvas></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas></canvas>
+            </div>
+        </div>
+    </section>
+
+    <section id="code">
+        <div class="container">
+            <h2 class="section-title">Code Snippets</h2>
+            <div class="code-editor"></div>
+            <div class="code-actions">
+                <button class="primary">Copy Code</button>
+                <button>Run Code</button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        let monacoEditor = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initCharts();
+            initMonacoEditor();
+            setupEventListeners();
+            initParticles();
+        });
+
+        function initMonacoEditor() {
+            require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs' }});
+            require(['vs/editor/editor.main'], function() {
+                monacoEditor = monaco.editor.create(document.querySelector('.code-editor'), {
+                    value: `import numpy as np\nimport tensorflow as tf\n\ndef create_model():\n    model = tf.keras.Sequential([\n        tf.keras.layers.Dense(64, activation='relu'),\n        tf.keras.layers.Dense(32, activation='relu'),\n        tf.keras.layers.Dense(1)\n    ])\n    return model`,
+                    language: 'python',
+                    theme: 'vs-dark',
+                    minimap: { enabled: false },
+                    automaticLayout: true,
+                    fontSize: 14,
+                    lineNumbers: 'on',
+                    scrollBeyondLastLine: false,
+                    roundedSelection: false,
+                    padding: { top: 10 }
+                });
+                window.addEventListener('resize', function() {
+                    if (monacoEditor) {
+                        monacoEditor.layout();
+                    }
+                });
+            });
+        }
+
+        function initCharts() {
+            const chartContexts = document.querySelectorAll('.chart-container canvas');
+            if (chartContexts.length >= 2) {
+                new Chart(chartContexts[0], {
+                    type: 'line',
+                    data: {
+                        labels: Array.from({length: 50}, (_, i) => i + 1),
+                        datasets: [{
+                            label: 'Training Loss',
+                            data: Array.from({length: 50}, () => Math.random()),
+                            borderColor: '#4ade80',
+                            tension: 0.4,
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: '#fff'
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                },
+                                ticks: { color: '#fff' }
+                            },
+                            y: {
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                },
+                                ticks: { color: '#fff' }
+                            }
+                        }
+                    }
+                });
+
+                new Chart(chartContexts[1], {
+                    type: 'scatter',
+                    data: {
+                        datasets: [{
+                            label: 'Cluster 1',
+                            data: Array.from({length: 30}, () => ({
+                                x: Math.random() * 10,
+                                y: Math.random() * 10
+                            })),
+                            backgroundColor: '#4ade80'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: '#fff'
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                },
+                                ticks: { color: '#fff' }
+                            },
+                            y: {
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                },
+                                ticks: { color: '#fff' }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        function setupEventListeners() {
+            const copyButton = document.querySelector('button.primary');
+            const runButton = document.querySelector('button:not(.primary)');
+
+            if (copyButton) {
+                copyButton.addEventListener('click', () => {
+                    if (monacoEditor) {
+                        const code = monacoEditor.getValue();
+                        navigator.clipboard.writeText(code).then(() => {
+                            showNotification('Code copied to clipboard!');
+                        });
+                    }
+                });
+            }
+
+            if (runButton) {
+                runButton.addEventListener('click', () => {
+                    showNotification('Running simulation...');
+                    setTimeout(() => {
+                        showNotification('Execution completed!');
+                    }, 2000);
+                });
+            }
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => notification.remove(), 300);
+            }, 2000);
+        }
+
+        function initParticles() {
+            const header = document.querySelector('header');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.width = particle.style.height = Math.random() * 3 + 1 + 'px';
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.top = Math.random() * 100 + 'vh';
+                particle.style.animationDuration = Math.random() * 10 + 10 + 's';
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                header.appendChild(particle);
+            }
+        }
+    </script>
+
+</body></html>
