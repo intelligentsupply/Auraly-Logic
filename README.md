@@ -2,7 +2,7 @@
 
 <div align="center">!
 
-  <img src="[Doppelnet](https://github.com/user-attachments/assets/aa69abcf-eeac-48c4-b7ed-298bf1076cc4)" width="100%" />
+  <img src="https://github.com/intelligentsupply/doppelnet/blob/47610be0b66dd1ef5279342e9b8942fadb769942/Doppelnet.png" width="100%" />
 </div>
 
 ## Table of Contents
