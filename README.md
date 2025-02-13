@@ -1,4 +1,4 @@
-# ECHO.EXE - An Autonomous AI by Mirroor
+# ECHO.EXE - An Autonomous AI by DEv
 
 <div align="center">
 
