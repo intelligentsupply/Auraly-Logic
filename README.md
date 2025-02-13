@@ -2,7 +2,7 @@
 
 <div align="center">
 
-  <img src="https://github.com/intelligentsupply/doppelnet/blob/47610be0b66dd1ef5279342e9b8942fadb769942/Doppelnet.png" width="100%" />
+  <img src="https://github.com/intelligentsupply/echo.exe/blob/be63b93fffb44e9c241dd080ff6f844c9a1c9710/echoexe.png" width="100%" />
 </div>
 
 ## Table of Contents
