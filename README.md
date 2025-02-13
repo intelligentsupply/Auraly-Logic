@@ -1,6 +1,6 @@
-# EXE - An Advanced AI by Mirroor
+# ECHO.EXE - An Autonomous AI by Mirroor
 
-<div align="center">!
+<div align="center">
 
   <img src="https://github.com/intelligentsupply/doppelnet/blob/47610be0b66dd1ef5279342e9b8942fadb769942/Doppelnet.png" width="100%" />
 </div>
@@ -10,182 +10,120 @@
 - [Core Features](#core-features)
 - [Extension Points](#extension-points)
 - [Quick Start](#quick-start)
-- [Using VAE as a Module](#using-vae-as-a-module)
+- [Using Echo.exe as a Module](#using-echoexe-as-a-module)
 
 ## Overview
-VAE is a highly modular AI agent engine built with TypeScript, Rust and Go that emphasizes pluggable architecture and platform independence. It provides a flexible foundation for building AI systems through:
+ECHO.EXE is an autonomous AI agent engine built with TypeScript, Rust, and Go, emphasizing modular architecture and platform independence. It provides a flexible foundation for building AI-driven systems with:
 
-- Plugin-based architecture with hot-swappable components
-- Multi-provider LLM support (GPT-4, Claude, custom providers)
+- Plugin-based architecture with swappable components
+- Multi-provider LLM support (GPT-4, Claude, and custom providers)
 - Cross-platform agent management
-- Extensible manager system for custom behaviors
+- Extensible manager system for unique behaviors
 - Vector-based semantic storage with pgvector
 
 ## Core Features
 
 ### Plugin Architecture
-- **Manager System**: Extend functionality through custom managers
-  - Memory Manager: Handles agent memory and context
-  - Personality Manager: Controls agent behavior and responses
-  - Custom Managers: Add your own specialized behaviors
+- **Manager System:** Extend functionality via custom managers:
+  - **Echo Manager:** Captures and reflects interactions as memory patterns
+  - **Personality Manager:** Adapts responses based on user interaction history
+  - **Custom Managers:** Add specialized behaviors and processes
 
 ### State Management
-- **Shared State System**: Centralized state management across components
-  - Manager-specific data storage
-  - Custom data injection
+- **Shared State System:** Centralized state management:
   - Cross-manager communication
+  - Custom data injection
+  - Persistent agent memory
 
 ### LLM Integration
-- **Provider Abstraction**: Support for multiple LLM providers
-  - Built-in GPT-4 and Claude support
-  - Extensible provider interface for custom LLMs
-  - Configurable model selection per operation
-  - Automatic fallback and retry handling
+- **Provider Abstraction:** Support multiple LLM providers:
+  - Built-in support for GPT-4 and Claude
+  - Extensible interfaces for custom LLMs
+  - Configurable model selection with automatic fallback handling
 
 ### Platform Support
-- **Platform Agnostic Core**: 
-  - Abstract agent engine independent of platforms
-  - Built-in support for CLI and API interfaces
-  - Extensible platform manager interface
-  - Example implementations for new platform integration
+- **Platform Agnostic Core:**
+  - CLI and API interfaces included
+  - Extensible platform manager for custom integrations
 
 ### Storage Layer
-- **Flexible Data Storage**:
-  - PostgreSQL with pgvector for semantic search
-  - GORM-based data models
-  - Customizable memory storage
+- **Semantic Memory Layer:**
+  - PostgreSQL with pgvector for vector-based semantic search
+  - Customizable memory storage solutions
   - Vector embedding support
 
 ### Toolkit/Function System
-- **Pluggable Tool/Function Integration**:
-  - Support for custom tool implementations
-  - Built-in toolkit management
-  - Function calling capabilities
-  - Automatic tool response handling
-  - State-aware tool execution
+- **Modular Toolkit Integration:**
+  - Plug-and-play custom tools
+  - Function calling and auto-response integration
+  - Context-aware tool execution
 
 ## Extension Points
-1. **LLM Providers**: Add new AI providers by implementing the LLM interface
+1. **LLM Providers:** Implement new AI providers with the LLM interface:
 ```go
-type Provider interface {
+ type Provider interface {
     GenerateCompletion(context.Context, CompletionRequest) (string, error)
-    GenerateJSON(context.Context, JSONRequest, interface{}) error
     EmbedText(context.Context, string) ([]float32, error)
-}
+ }
 ```
 
-2. **Managers**: Create new behaviors by implementing the Manager interface
+2. **Managers:** Add new behaviors via the Manager interface:
 ```go
-type Manager interface {
+ type Manager interface {
     GetID() ManagerID
-    GetDependencies() []ManagerID
     Process(state *state.State) error
-    PostProcess(state *state.State) error
     Context(state *state.State) ([]state.StateData, error)
-    Store(fragment *db.Fragment) error
-    StartBackgroundProcesses()
-    StopBackgroundProcesses()
-    RegisterEventHandler(callback EventCallbackFunc)
-    triggerEvent(eventData EventData)
-}
+ }
 ```
 
 ## Quick Start
-1. Clone the repository
-```bash 
-git clone https://github.com/alonelabs/vae
-```   
-2. Copy `.env.example` to `.env` and configure your environment variables
+1. Clone the repository:
+```bash
+git clone https://github.com/mirroor-labs/echo-exe
+```
+2. Configure your environment:
+```bash
+cp .env.example .env
+```
 3. Install dependencies:
 ```bash
 npm install
 cargo build
 go mod download
 ```
-4. Run the development environment:
+4. Launch the environment:
 ```bash
 npm run dev
 ```
 
 ## Environment Variables
 ```env
-DB_URL=postgresql://user:password@localhost:5432/vae
+DB_URL=postgresql://user:password@localhost:5432/echo
 OPENAI_API_KEY=your_openai_api_key
 ANTHROPIC_API_KEY=your_anthropic_api_key
-
-Platform-specific credentials as needed
 ```
 
-## Architecture
-The project follows a clean, multi-language architecture:
-
-- `src/agents`: TypeScript agent implementations
-- `src/runtime`: Rust-based runtime engine
-- `src/plugins`: Plugin system
-- `pkg/network`: Go networking layer
-- `examples/`: Reference implementations
-
-## Using VAE as a Module
-
-1. Add VAE to your project:
+## Using Echo.exe as a Module
+1. Install the ECHO.EXE module:
 ```bash
-npm install @alonelabs/vae
+npm install @mirroor/echo-exe
 ```
-
-2. Import VAE in your code:
+2. Import and initialize in your code:
 ```typescript
-import {
-  Engine,
-  LLMClient,
-  BaseAgent,
-  MemoryManager,
-  PersonalityManager
-} from '@alonelabs/vae';
-```
-
-3. Basic usage example:
-```typescript
-// Initialize LLM client
+import { Engine, LLMClient, MemoryManager } from '@mirroor/echo-exe';
 const llmClient = new LLMClient({
   provider: 'gpt4',
   apiKey: process.env.OPENAI_API_KEY,
-  modelConfig: {
-    default: 'gpt-4-turbo'
-  }
 });
-
-// Create engine instance
-const engine = new Engine({
-  llm: llmClient,
-  db: database,
-  logger: logger
-});
-
-// Process input
-const state = await engine.newState({
-  actorId,
-  sessionId,
-  input: "Your input text here"
-});
-
-const response = await engine.process(state);
+const engine = new Engine({ llm: llmClient });
+const response = await engine.process("Hello, Echo");
 ```
 
-4. Available packages:
-- `@alonelabs/vae`: Core framework
-- `@alonelabs/vae-llm`: LLM provider interfaces
-- `@alonelabs/vae-runtime`: Rust runtime
-- `@alonelabs/vae-network`: Go networking
-- `@alonelabs/vae-plugins`: Plugin system
-
-For detailed examples, see the `examples/` directory in the repository.
-
 ## Contact
-
-- Website: [alonelabs.net](https://alonelabs.net)
-- Email: contact@alonelabs.net
-- Twitter: [@alone_labs](https://x.com/alone_labs)
+- Website: [mirroor.ai](https://mirroor.ai)
+- Email: contact@mirroor.ai
+- Twitter: [@mirroor_ai](https://x.com/mirroor_ai)
 
 ## License
+Licensed under the MIT License.
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
