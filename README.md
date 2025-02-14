@@ -1,4 +1,4 @@
-# ECHO.EXE - An Autonomous AI by DEv
+# Myth Frame - An Autonomous AI by DEv
 
 <div align="center">
 
