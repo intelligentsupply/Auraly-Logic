@@ -2,7 +2,7 @@
 
 <div align="center">
 
-  <img src="https://github.com/intelligentsupply/Myth-Frame/blob/715561e3555982a571b3de4ec8fda4395f75debc/pixil-frame-0%20(2).png" width="100%" />
+  <img src="https://github.com/intelligentsupply/Nivue-Arch/blob/af03e12c8decb6b552b86ae88a5511ceb66ead8e/Nivue%20Arch%20(1).png" width="100%" />
 </div>
 
 ## Table of Contents
