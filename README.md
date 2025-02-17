@@ -1,4 +1,4 @@
-# Myth Frame - An Autonomous AI by DEv
+# Nivue Arch - An Autonomous AI by DEv
 
 <div align="center">
 
