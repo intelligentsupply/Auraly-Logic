@@ -10,7 +10,7 @@
 - [Core Features](#core-features)
 - [Extension Points](#extension-points)
 - [Quick Start](#quick-start)
-- [Using Echo.exe as a Module](#using-echoexe-as-a-module)
+- [Using Nivue.exe as a Module](#using-echoexe-as-a-module)
 
 ## Overview
 ECHO.EXE is an autonomous AI agent engine built with TypeScript, Rust, and Go, emphasizing modular architecture and platform independence. It provides a flexible foundation for building AI-driven systems with:
