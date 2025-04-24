@@ -1,8 +1,8 @@
-# Nivue Arch - An Autonomous AI by DEv
+# Auralyn Logic - An Autonomous AI by DEv
 
 <div align="center">
 
-  <img src="https://github.com/intelligentsupply/Nivue-Arch/blob/af03e12c8decb6b552b86ae88a5511ceb66ead8e/Nivue%20Arch%20(1).png" width="100%" />
+  <img src="[https://github.com/intelligentsupply/Nivue-Arch/blob/af03e12c8decb6b552b86ae88a5511ceb66ead8e/Nivue%20Arch%20(1).png](https://github.com/intelligentsupply/Auraly-Logic/blob/3b0d4643273d795fe3c3cdc2c299ea2a7b351a6a/Auralyn-exe)" width="100%" />
 </div>
 
 ## Table of Contents
