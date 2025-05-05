@@ -1,8 +1,7 @@
-# Auralyn Logic - An Autonomous AI by DEv
+# Divinez - An Autonomous AI by DEv
 
 <div align="center">
 
-  <img src="https://github.com/intelligentsupply/Auraly-Logic/blob/42b86bcc2c84b2b5d156822f26a2690647b04976/zaura.png" width="100%" />
 </div>
 
 ## Table of Contents
@@ -13,7 +12,7 @@
 - [Using Nivue.exe as a Module](#using-echoexe-as-a-module)
 
 ## Overview
-ECHO.EXE is an autonomous AI agent engine built with TypeScript, Rust, and Go, emphasizing modular architecture and platform independence. It provides a flexible foundation for building AI-driven systems with:
+Divinez is an autonomous AI agent engine built with TypeScript, Rust, and Go, emphasizing modular architecture and platform independence. It provides a flexible foundation for building AI-driven systems with:
 
 - Plugin-based architecture with swappable components
 - Multi-provider LLM support (GPT-4, Claude, and custom providers)
